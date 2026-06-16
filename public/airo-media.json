@@ -1,0 +1,135 @@
+{
+  "pages/home/value-prop": {
+    "mediaType": "video",
+    "currentUrl": "https://blobby.wsimg.com/getty/videos/1150926097",
+    "searchQuery": "female executive entrepreneur calm visionary looking forward aspirational freedom new venture",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1924762669",
+      "https://img1.wsimg.com/isteam/getty/1467893425",
+      "https://img1.wsimg.com/isteam/getty/2249511098",
+      "https://img1.wsimg.com/isteam/getty/1345504220",
+      "https://img1.wsimg.com/isteam/getty/2275116437",
+      "https://img1.wsimg.com/isteam/getty/2231945880",
+      "https://img1.wsimg.com/isteam/getty/2220795804",
+      "https://img1.wsimg.com/isteam/getty/1552851623",
+      "https://img1.wsimg.com/isteam/getty/2000672735",
+      "https://img1.wsimg.com/isteam/getty/1126412354"
+    ],
+    "userModified": true,
+    "createdAt": "2026-06-10T20:08:42.622Z",
+    "lastUpdated": "2026-06-10T22:57:04.931Z",
+    "gettyId": "1150926097",
+    "alternativeGettyIds": [
+      "1924762669",
+      "1467893425",
+      "2249511098",
+      "1345504220",
+      "2275116437",
+      "2231945880",
+      "2220795804",
+      "1552851623",
+      "2000672735",
+      "1126412354"
+    ],
+    "requestedSize": {
+      "width": 900,
+      "height": 700,
+      "fit": "cover"
+    },
+    "orientations": "vertical,square",
+    "moods": "bold,natural,warm",
+    "graphicalStyles": "photography",
+    "numberOfPeople": "one",
+    "ageOfPeople": "adult,young_adult"
+  },
+  "layouts/header/unsh": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/layouts-header-unsh-3d1d6292.png",
+    "searchQuery": "",
+    "alternatives": [
+      "/airo-assets/uploads/layouts-header-unsh-3d1d6292.png"
+    ],
+    "userModified": false,
+    "sourceRef": "src/layouts/parts/Header.tsx:23",
+    "createdAt": "2026-06-12T19:11:11.793Z",
+    "lastUpdated": "2026-06-12T19:11:11.793Z"
+  },
+  "pages/home/featured-coach": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2273861071",
+    "searchQuery": "professional executive coach portrait confident business leader",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2260129363",
+      "https://img1.wsimg.com/isteam/getty/2218645666"
+    ],
+    "userModified": false,
+    "createdAt": "2026-06-12T22:30:30.514Z",
+    "lastUpdated": "2026-06-12T22:30:30.514Z",
+    "gettyId": "2273861071",
+    "alternativeGettyIds": [
+      "2260129363",
+      "2218645666"
+    ],
+    "requestedSize": {
+      "width": 480,
+      "height": 600,
+      "fit": "cover"
+    },
+    "orientations": "vertical",
+    "compositions": "headshot",
+    "graphicalStyles": "photography",
+    "numberOfPeople": "one"
+  },
+  "pages/home/featured-mentor": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2201858273",
+    "searchQuery": "experienced mentor senior professional warm approachable portrait",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/169972244",
+      "https://img1.wsimg.com/isteam/getty/1256443266"
+    ],
+    "userModified": false,
+    "createdAt": "2026-06-12T22:30:36.569Z",
+    "lastUpdated": "2026-06-12T22:30:36.569Z",
+    "gettyId": "2201858273",
+    "alternativeGettyIds": [
+      "169972244",
+      "1256443266"
+    ],
+    "requestedSize": {
+      "width": 480,
+      "height": 600,
+      "fit": "cover"
+    },
+    "orientations": "vertical",
+    "compositions": "headshot",
+    "graphicalStyles": "photography",
+    "numberOfPeople": "one"
+  },
+  "pages/home/featured-speaker": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/2244066173",
+    "searchQuery": "keynote guest speaker presenting on stage thought leader",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/112156381",
+      "https://img1.wsimg.com/isteam/getty/2279854492"
+    ],
+    "userModified": false,
+    "createdAt": "2026-06-12T22:30:42.285Z",
+    "lastUpdated": "2026-06-12T22:30:42.285Z",
+    "gettyId": "2244066173",
+    "alternativeGettyIds": [
+      "112156381",
+      "2279854492"
+    ],
+    "requestedSize": {
+      "width": 480,
+      "height": 600,
+      "fit": "cover"
+    },
+    "orientations": "vertical",
+    "compositions": "headshot",
+    "graphicalStyles": "photography",
+    "numberOfPeople": "one"
+  }
+}
