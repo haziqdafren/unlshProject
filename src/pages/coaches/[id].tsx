@@ -51,7 +51,7 @@ export default function CoachProfilePage() {
     supabase
       .from('coaches')
       .select('*')
-      .eq('id', id)
+      .eq('slug', id)
       .single()
       .then(({ data, error }) => {
         if (error || !data) { setNotFound(true); } else { setCoach(data as Coach); }
@@ -363,7 +363,7 @@ export default function CoachProfilePage() {
                 }}>
                   Ready to begin? Book a session and take the first step.
                 </p>
-                <Link to="/book" className="cp-book-btn">Book a session</Link>
+                <Link to={`/book?coach=${encodeURIComponent(coach.focus)}`} className="cp-book-btn">Book a session</Link>
               </div>
             )}
           </div>

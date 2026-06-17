@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Helmet } from '@dr.pogodin/react-helmet';
 
 const BOOK_SEO =
@@ -64,6 +65,14 @@ const COACHES = [
 { value: 'venture', label: 'Venture Building' },
 { value: 'wellness', label: 'Wellness & Vitality' },
 { value: 'spiritual', label: 'Spiritual Growth' }];
+
+// Map coach focus label (from URL param) → select value
+const FOCUS_TO_VALUE: Record<string, string> = {
+  'Executive Leadership': 'executive',
+  'Venture Building':     'venture',
+  'Wellness & Vitality':  'wellness',
+  'Spiritual Growth':     'spiritual',
+};
 
 
 const SESSION_TYPES = [
@@ -382,6 +391,7 @@ const inputStyle: React.CSSProperties = {
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 export default function BookPage() {
+  const [searchParams] = useSearchParams();
   const headerRef = useRef<HTMLElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -405,7 +415,10 @@ export default function BookPage() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [coach, setCoach] = useState('');
+  const [coach, setCoach] = useState(() => {
+    const focus = searchParams.get('coach') ?? '';
+    return FOCUS_TO_VALUE[focus] ?? '';
+  });
   const [sessionType, setSessionType] = useState('');
   const [notes, setNotes] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});

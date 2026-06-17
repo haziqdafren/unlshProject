@@ -490,7 +490,7 @@ export default function CoachesPage() {
                     </div>
                   ) : (
                     /* User view — clickable link row */
-                    <Link to={`/coaches/${coach.id}`} className="coach-row coach-row-link" aria-label={`${coach.name} — ${coach.focus}`}>
+                    <Link to={`/coaches/${coach.slug ?? coach.id}`} className="coach-row coach-row-link" aria-label={`${coach.name} — ${coach.focus}`}>
                       <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: C.textFaint, letterSpacing: '0.04em' }}>
                         {coach.index}
                       </span>

@@ -4,6 +4,7 @@
 
 export interface Coach {
   id: string;
+  slug?: string;
   name: string;
   title: string;
   focus: string;
