@@ -24,6 +24,12 @@ function useReveal(ref: React.RefObject<Element | null>, threshold = 0.04) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Add immediately if already in viewport
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      el.classList.add('is-visible');
+      return;
+    }
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { el.classList.add('is-visible'); obs.disconnect(); } },
       { threshold },
