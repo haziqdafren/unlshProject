@@ -54,7 +54,15 @@ export default function CoachProfilePage() {
       .eq('slug', id)
       .single()
       .then(({ data, error }) => {
-        if (error || !data) { setNotFound(true); } else { setCoach(data as Coach); }
+        if (error || !data) { setNotFound(true); } else {
+          const raw = data as Coach & { tags: unknown };
+          const tags = Array.isArray(raw.tags)
+            ? raw.tags as string[]
+            : typeof raw.tags === 'string'
+              ? (raw.tags as string).replace(/^\{|\}$/g, '').split(',').map((t) => t.replace(/^"|"$/g, '').trim())
+              : [];
+          setCoach({ ...raw, tags });
+        }
         setIsLoading(false);
       });
   }, [id]);
