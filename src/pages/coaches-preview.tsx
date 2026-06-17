@@ -190,7 +190,10 @@ function CoachesList() {
   useStaggerReveal(listRef as React.RefObject<Element>, '.cp-coach-row', 80, 0.05);
 
   const fetchCoaches = useCallback(async () => {
-    const { data } = await supabase.from('coaches').select('*').order('index');
+    const { data, error } = await supabase.from('coaches').select('*').order('index');
+    if (error) {
+      console.error('Failed to load coaches:', error.message);
+    }
     setCoaches((data as Coach[]) ?? []);
     setLoading(false);
   }, []);

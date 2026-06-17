@@ -11,8 +11,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const navItems = [
-    { href: '/about', label: 'About' },
-    { href: '/book', label: 'Book a Session' },
+    { href: '/about',           label: 'About' },
+    { href: '/coaches-preview', label: 'Coaches' },
+    { href: '/inquiry',         label: 'Book a Session' },
   ];
 
   return (
