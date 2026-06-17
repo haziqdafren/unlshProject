@@ -8,7 +8,8 @@ export default function Header() {
 
   const navItems = [
     { href: '/about', label: 'About' },
-    { href: '/book', label: 'Book a Session' },
+    { href: '/coaches-preview', label: 'Coaches' },
+    { href: '/inquiry', label: 'Book a Session' },
   ];
 
   return (
@@ -60,6 +61,32 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              to="/login"
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '13px',
+                fontWeight: 900,
+                textTransform: 'uppercase' as const,
+                letterSpacing: '0.12em',
+                color: '#0A0A0A',
+                textDecoration: 'none',
+                padding: '8px 20px',
+                border: '1px solid rgba(10,10,10,0.35)',
+                transition: 'background-color 250ms, border-color 250ms',
+                WebkitFontSmoothing: 'antialiased',
+                whiteSpace: 'nowrap' as const,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(10,10,10,0.08)';
+                e.currentTarget.style.borderColor = 'rgba(10,10,10,0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.borderColor = 'rgba(10,10,10,0.35)';
+              }}>
+              Login
+            </Link>
           </nav>
 
           {/* Mobile toggle */}
@@ -97,6 +124,25 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
+              <Link
+                to="/login"
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: '14px',
+                  fontWeight: 900,
+                  textTransform: 'uppercase' as const,
+                  letterSpacing: '0.12em',
+                  color: '#0A0A0A',
+                  textDecoration: 'none',
+                  paddingBlock: '8px',
+                  WebkitFontSmoothing: 'antialiased',
+                  borderTop: '1px solid rgba(10,10,10,0.10)',
+                  marginTop: '4px',
+                  paddingTop: '16px',
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}>
+                Login
+              </Link>
             </nav>
           </div>
         )}

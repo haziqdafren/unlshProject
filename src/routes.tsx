@@ -8,7 +8,9 @@ const NotFoundPage = import.meta.env.DEV
   ? lazy(() => import('../dev-tools/src/PageNotFound'))
   : ProdNotFoundPage;
 
-const BookPage           = lazy(() => import('./pages/book'));
+const BookPage              = lazy(() => import('./pages/book'));
+const InquiryPage           = lazy(() => import('./pages/inquiry'));
+const CoachesPreviewPage    = lazy(() => import('./pages/coaches-preview'));
 const AboutPage          = lazy(() => import('./pages/about'));
 const LoginPage          = lazy(() => import('./pages/login'));
 const RegisterPage       = lazy(() => import('./pages/register'));
@@ -25,6 +27,14 @@ export const routes: RouteObject[] = [
   {
     path: '/book',
     element: <BookPage />,
+  },
+  {
+    path: '/inquiry',
+    element: <InquiryPage />,
+  },
+  {
+    path: '/coaches-preview',
+    element: <CoachesPreviewPage />,
   },
   {
     path: '/about',
@@ -68,5 +78,5 @@ export const routes: RouteObject[] = [
   },
 ];
 
-export type Path = '/' | '/book' | '/about' | '/login' | '/register' | '/forgot-password' | '/reset-password' | '/coaches' | '/coaches/:id';
+export type Path = '/' | '/book' | '/inquiry' | '/coaches-preview' | '/about' | '/login' | '/register' | '/forgot-password' | '/reset-password' | '/coaches' | '/coaches/:id';
 export type Params = Record<string, string | undefined>;
