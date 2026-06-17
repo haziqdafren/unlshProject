@@ -226,10 +226,10 @@ function UserPanel() {
 
   const deleteUser = async (profile: Profile) => {
     setBusyId(profile.id);
-    const { error: err } = await supabase
-      .from('profiles')
-      .delete()
-      .eq('id', profile.id);
+    // Must call Edge Function — anon key cannot delete from auth.users directly
+    const { error: err } = await supabase.functions.invoke('delete-user', {
+      body: { userId: profile.id },
+    });
     if (err) { toast('Failed to remove user.', 'error' as never); }
     else {
       toast(`${profile.email} removed.`, 'success');
