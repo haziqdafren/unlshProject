@@ -173,7 +173,7 @@ export default function ForgotPasswordPage() {
                 Account recovery
               </span>
             </div>
-            <h1 style={{ fontFamily: "Futura,'Trebuchet MS',sans-serif", fontSize: 'clamp(28px,5vw,38px)', fontWeight: 400, lineHeight: 1.1, letterSpacing: '0.01em', color: C.onDark, margin: 0 }}>
+            <h1 style={{ fontFamily: "Futura,'Trebuchet MS',sans-serif", "--font-heading": "Futura,'Trebuchet MS',sans-serif", fontSize: 'clamp(28px,5vw,38px)', fontWeight: 400, lineHeight: 1.1, letterSpacing: '0.01em', color: C.onDark, margin: 0 } as React.CSSProperties}>
               {sent ? 'Check your inbox' : 'Forgot password?'}
             </h1>
           </div>
