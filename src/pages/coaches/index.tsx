@@ -179,12 +179,180 @@ function DeleteConfirm({ name, onConfirm, onCancel }: { name: string; onConfirm:
   );
 }
 
+// ─── User management panel (admin only) ───────────────────────────────────────
+interface Profile {
+  id: string;
+  email: string;
+  full_name: string | null;
+  role: 'admin' | 'user';
+  created_at: string;
+}
+
+function UserPanel() {
+  const { toast } = useToast();
+  const [profiles,    setProfiles]    = useState<Profile[]>([]);
+  const [loading,     setLoading]     = useState(true);
+  const [error,       setError]       = useState<string | null>(null);
+  const [delTarget,   setDelTarget]   = useState<Profile | null>(null);
+  const [busyId,      setBusyId]      = useState<string | null>(null);
+
+  const fetchProfiles = useCallback(async () => {
+    setLoading(true); setError(null);
+    const { data, error: err } = await supabase
+      .from('profiles')
+      .select('*')
+      .order('created_at');
+    if (err) setError('Failed to load users. Check RLS policies.');
+    else setProfiles((data as Profile[]) ?? []);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { void fetchProfiles(); }, [fetchProfiles]);
+
+  const toggleRole = async (profile: Profile) => {
+    const newRole = profile.role === 'admin' ? 'user' : 'admin';
+    setBusyId(profile.id);
+    const { error: err } = await supabase
+      .from('profiles')
+      .update({ role: newRole })
+      .eq('id', profile.id);
+    if (err) { toast('Failed to update role.', 'error' as never); }
+    else {
+      toast(`${profile.email} is now ${newRole}.`, 'success');
+      setProfiles(ps => ps.map(p => p.id === profile.id ? { ...p, role: newRole } : p));
+    }
+    setBusyId(null);
+  };
+
+  const deleteUser = async (profile: Profile) => {
+    setBusyId(profile.id);
+    const { error: err } = await supabase
+      .from('profiles')
+      .delete()
+      .eq('id', profile.id);
+    if (err) { toast('Failed to remove user.', 'error' as never); }
+    else {
+      toast(`${profile.email} removed.`, 'success');
+      setProfiles(ps => ps.filter(p => p.id !== profile.id));
+    }
+    setDelTarget(null);
+    setBusyId(null);
+  };
+
+  return (
+    <section style={{ padding: '0 clamp(24px,5vw,80px) clamp(64px,9vw,120px)' }} aria-label="User management">
+      <style>{`
+        .user-row {
+          display: grid;
+          grid-template-columns: 1fr auto auto;
+          align-items: center;
+          gap: 16px;
+          padding: clamp(16px,2.5vw,22px) 0;
+          border-bottom: 1px solid ${C.borderLight};
+        }
+        .user-role-btn {
+          font-family: var(--font-sans); font-size: 10px; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.1em;
+          padding: 5px 12px; border-radius: 999px; cursor: pointer;
+          border: 1px solid transparent;
+          transition: opacity 200ms ${EASE};
+        }
+        .user-role-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .user-role-btn.is-admin {
+          background: rgba(217,207,187,0.15); color: ${C.tan};
+          border-color: rgba(217,207,187,0.3);
+        }
+        .user-role-btn.is-user {
+          background: rgba(26,26,26,0.06); color: ${C.textFaint};
+          border-color: ${C.borderLight};
+        }
+        .user-del-btn {
+          background: none; border: none; cursor: pointer;
+          color: ${C.textFaint}; padding: 4px 8px;
+          font-family: var(--font-sans); font-size: 11px; font-weight: 700;
+          text-transform: uppercase; letter-spacing: 0.1em;
+          transition: color 200ms ${EASE};
+        }
+        .user-del-btn:hover { color: ${C.errorRed}; }
+        .user-del-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        @media (max-width: 520px) {
+          .user-row { grid-template-columns: 1fr auto; }
+          .user-del-btn { display: none; }
+        }
+      `}</style>
+
+      {loading && <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: C.textFaint, padding: '24px 0' }}>Loading…</p>}
+      {error   && <p role="alert" style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: C.errorRed, padding: '24px 0' }}>{error}</p>}
+
+      {!loading && !error && (
+        <>
+          <p style={{ fontFamily: 'var(--font-sans)', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: C.textFaint, marginBottom: '8px' }}>
+            {profiles.length} {profiles.length === 1 ? 'user' : 'users'}
+          </p>
+          <div style={{ borderTop: `1px solid ${C.borderLight}` }}>
+            {profiles.map(profile => (
+              <div key={profile.id} className="user-row">
+                <div>
+                  <p style={{ fontFamily: "Futura,'Trebuchet MS',sans-serif", fontSize: 'clamp(15px,2vw,18px)', fontWeight: 400, color: C.textPrimary, margin: '0 0 3px' }}>
+                    {profile.full_name || '—'}
+                  </p>
+                  <p style={{ fontFamily: 'var(--font-sans)', fontSize: '13px', color: C.textMuted, margin: '0 0 2px' }}>
+                    {profile.email}
+                  </p>
+                  <p style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: C.textFaint, margin: 0 }}>
+                    Joined {new Date(profile.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </p>
+                </div>
+                <button
+                  className={`user-role-btn ${profile.role === 'admin' ? 'is-admin' : 'is-user'}`}
+                  disabled={busyId === profile.id}
+                  onClick={() => toggleRole(profile)}
+                  title={`Click to make ${profile.role === 'admin' ? 'user' : 'admin'}`}>
+                  {profile.role}
+                </button>
+                <button
+                  className="user-del-btn"
+                  disabled={busyId === profile.id}
+                  onClick={() => setDelTarget(profile)}
+                  aria-label={`Remove ${profile.email}`}>
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {delTarget && (
+        <div role="dialog" aria-modal="true" aria-label="Confirm remove user"
+          style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
+          <div style={{ background: C.dark800, borderRadius: '4px', padding: '32px', maxWidth: '380px', width: '100%', border: `1px solid rgba(245,245,240,0.08)` }}>
+            <h2 style={{ fontFamily: "Futura,'Trebuchet MS',sans-serif", fontSize: '18px', fontWeight: 400, color: C.onDark, marginBottom: '12px' }}>Remove user?</h2>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '14px', color: C.onDarkMuted, lineHeight: 1.6, marginBottom: '28px' }}>
+              This will remove <strong style={{ color: C.onDark }}>{delTarget.email}</strong> from the platform. This cannot be undone.
+            </p>
+            <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+              <button onClick={() => setDelTarget(null)} style={{ background: 'none', border: `1px solid rgba(245,245,240,0.15)`, borderRadius: '2px', padding: '10px 20px', color: C.onDarkMuted, fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', cursor: 'pointer' }}>
+                Cancel
+              </button>
+              <button onClick={() => deleteUser(delTarget)} style={{ background: C.errorRed, border: 'none', borderRadius: '2px', padding: '10px 20px', color: '#fff', fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', cursor: 'pointer' }}>
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function CoachesPage() {
   const { user, logout, isAdmin } = useAuth();
   const { toast } = useToast();
   const headerRef = useRef<HTMLElement>(null);
 
+  const [activeTab,    setActiveTab]   = useState<'coaches' | 'users'>('coaches');
   const [coaches,      setCoaches]     = useState<Coach[]>([]);
   const [loadingData,  setLoadingData] = useState(true);
   const [dataError,    setDataError]   = useState<string | null>(null);
@@ -391,7 +559,36 @@ export default function CoachesPage() {
           </p>
         </header>
 
+        {/* Admin tab switcher */}
+        {isAdmin && (
+          <div style={{ padding: '0 clamp(24px,5vw,80px)', marginBottom: 'clamp(32px,4vw,48px)' }}>
+            <div style={{ display: 'inline-flex', borderBottom: `1px solid ${C.borderLight}` }}>
+              {(['coaches', 'users'] as const).map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    fontFamily: 'var(--font-sans)', fontSize: '12px', fontWeight: 700,
+                    textTransform: 'uppercase', letterSpacing: '0.12em',
+                    padding: '10px 24px 12px',
+                    color: activeTab === tab ? C.textPrimary : C.textFaint,
+                    borderBottom: activeTab === tab ? `2px solid ${C.dark900}` : '2px solid transparent',
+                    marginBottom: '-1px',
+                    transition: `color 200ms ${EASE}`,
+                  }}>
+                  {tab === 'coaches' ? 'Coaches' : 'Users'}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Users panel (admin only) */}
+        {isAdmin && activeTab === 'users' && <UserPanel />}
+
         {/* Coach list */}
+        {(!isAdmin || activeTab === 'coaches') && (
         <section style={{ padding: '0 clamp(24px,5vw,80px) clamp(64px,9vw,120px)' }} aria-label="Coach directory">
 
           {loadingData && (
@@ -515,6 +712,7 @@ export default function CoachesPage() {
             <li aria-hidden="true" style={{ borderTop: `1px solid ${C.borderLight}` }} />
           </ol>
         </section>
+        )}
       </main>
 
       {/* Modals */}
