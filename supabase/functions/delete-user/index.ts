@@ -37,8 +37,14 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Check admin role from user_metadata
-    if (caller.user_metadata?.role !== 'admin') {
+    // Check admin role from profiles table
+    const { data: profile, error: profileError } = await adminClient
+      .from('profiles')
+      .select('role')
+      .eq('id', caller.id)
+      .single();
+
+    if (profileError || profile?.role !== 'admin') {
       return new Response(JSON.stringify({ error: 'Forbidden: admin only' }), {
         status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
