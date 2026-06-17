@@ -94,11 +94,9 @@ export default function CoachProfilePage() {
 
       <style>{`
         .cp-hero {
-          opacity: 0;
-          transform: translateY(16px);
-          transition: opacity 700ms ${EASE}, transform 700ms ${EASE};
+          opacity: 1;
+          transform: translateY(0);
         }
-        .cp-hero.is-visible { opacity: 1; transform: translateY(0); }
 
         .cp-rule {
           display: block;
@@ -112,11 +110,9 @@ export default function CoachProfilePage() {
         .cp-hero.is-visible .cp-rule { transform: scaleX(1); }
 
         .cp-body {
-          opacity: 0;
-          transform: translateY(12px);
-          transition: opacity 700ms ${EASE} 140ms, transform 700ms ${EASE} 140ms;
+          opacity: 1;
+          transform: translateY(0);
         }
-        .cp-body.is-visible { opacity: 1; transform: translateY(0); }
 
         .cp-back {
           display: inline-flex;
