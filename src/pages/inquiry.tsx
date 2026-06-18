@@ -39,20 +39,30 @@ const TOPICS = [
 
 type SubmitMode = 'call' | 'email';
 
+const INQUIRER_TYPES = [
+  'Individual',
+  'Coach / Mentor / Other Expert',
+  'Company',
+  'Investor / Sponsor',
+  'Other',
+];
+
 interface FormValues {
-  firstName: string;
-  lastName:  string;
-  email:     string;
-  company:   string;
-  role:      string;
-  website:   string;
-  topic:     string;
-  message:   string;
+  firstName:    string;
+  lastName:     string;
+  email:        string;
+  company:      string;
+  role:         string;
+  website:      string;
+  inquirerType: string;
+  topic:        string;
+  message:      string;
 }
 
 const BLANK: FormValues = {
   firstName: '', lastName: '', email: '',
   company: '', role: '', website: '',
+  inquirerType: 'Individual',
   topic: 'Executive coaching', message: '',
 };
 
@@ -233,7 +243,7 @@ function BookForm() {
     setSubmitted(true);
     const subject = encodeURIComponent(`Inquiry — ${form.topic}`);
     const body    = encodeURIComponent(
-      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.company ? `\nCompany: ${form.company}` : ''}${form.role ? `\nRole: ${form.role}` : ''}${form.website ? `\nWebsite/LinkedIn: ${form.website}` : ''}\nInquiry: ${form.topic}\n\n${form.message}`,
+      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.company ? `\nCompany: ${form.company}` : ''}${form.role ? `\nRole: ${form.role}` : ''}${form.website ? `\nWebsite/LinkedIn: ${form.website}` : ''}\nI am a: ${form.inquirerType}\nInquiry: ${form.topic}\n\n${form.message}`,
     );
     window.location.href = `mailto:${INQUIRY_EMAIL}?subject=${subject}&body=${body}`;
   }
@@ -506,6 +516,16 @@ function BookForm() {
               onChange={e => set('website', e.target.value)}
               autoComplete="url"
             />
+          </div>
+
+          {/* I am a */}
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="book-inquirer-type" className="book-label">I Am A</label>
+            <select
+              id="book-inquirer-type" className="book-select"
+              value={form.inquirerType} onChange={e => set('inquirerType', e.target.value)}>
+              {INQUIRER_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
           </div>
 
           {/* Inquiry type */}
