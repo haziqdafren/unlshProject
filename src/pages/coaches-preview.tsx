@@ -154,9 +154,9 @@ function CoachesHero() {
             "--font-heading": "Futura, 'Trebuchet MS', sans-serif",
             fontWeight: 400, fontSize: 'clamp(52px, 7.5vw, 72px)',
             lineHeight: 1.06, letterSpacing: '0.01em',
-            color: C.textOnDark, textTransform: 'lowercase' as const,
+            color: C.textOnDark,
           } as React.CSSProperties}>
-          world-class guidance
+          World-Class Guidance
         </h1>
       </div>
 
@@ -356,10 +356,10 @@ function CoachesList() {
             "--font-heading": "Futura, 'Trebuchet MS', sans-serif",
             fontWeight: 400, fontSize: 'clamp(32px, 5vw, 42px)',
             lineHeight: 1.1, letterSpacing: '0.01em',
-            color: C.textOnLight, textTransform: 'lowercase' as const,
+            color: C.textOnLight,
             marginBottom: 'clamp(28px, 4vw, 48px)',
           } as React.CSSProperties}>
-          meet the people behind the work
+          Meet The People Behind The Work
         </h2>
         <span className="cp-list-header-rule" aria-hidden="true" />
       </div>

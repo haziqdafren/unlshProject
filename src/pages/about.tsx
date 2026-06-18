@@ -166,8 +166,8 @@ function AboutHero() {
             lineHeight: 1.06,
             letterSpacing: '0.01em',
             color: C.textOnDark,
-            textTransform: 'lowercase' as const, "--font-heading": "Futura, 'Trebuchet MS', sans-serif"
-          } as React.CSSProperties} className="">BEYOND COACHING
+            "--font-heading": "Futura, 'Trebuchet MS', sans-serif"
+          } as React.CSSProperties} className="">Beyond Coaching
 
 
         </h1>
@@ -306,10 +306,10 @@ function WhatSetsUsApart() {
               lineHeight: 1.1,
               letterSpacing: '0.01em',
               color: C.textOnLight,
-              textTransform: 'lowercase' as const, "--font-heading": "Futura, 'Trebuchet MS', sans-serif"
+              "--font-heading": "Futura, 'Trebuchet MS', sans-serif"
             } as React.CSSProperties} className="">
-            
-            world-class guidance meets inner work
+
+            World-Class Guidance Meets Inner Work
           </h2>
         </div>
 
@@ -532,9 +532,8 @@ function WhatWeOffer() {
             lineHeight: 1.1,
             letterSpacing: '0.01em',
             color: C.textOnDark,
-            textTransform: 'lowercase' as const,
             marginBottom: 'clamp(28px, 4vw, 48px)', "--font-heading": "Futura, 'Trebuchet MS', sans-serif"
-          } as React.CSSProperties} className="">How it works
+          } as React.CSSProperties} className="">How It Works
 
 
         </h2>
@@ -764,12 +763,11 @@ function AboutCta() {
             lineHeight: 1.04,
             letterSpacing: '0.01em',
             color: C.textOnLight,
-            textTransform: 'lowercase' as const,
             maxWidth: '16ch',
             marginBottom: 0, "--font-heading": "Futura, 'Trebuchet MS', sans-serif"
           } as React.CSSProperties} className="">
-          
-          let&apos;s talk about what&apos;s next
+
+          Let&apos;s Talk About What&apos;s Next
         </h2>
       </div>
 

@@ -102,10 +102,9 @@ export default function NotFoundPage() {
             lineHeight: 1.04,
             letterSpacing: '0.01em',
             color: C.textOnDark,
-            textTransform: 'lowercase' as const,
             marginBottom: 'clamp(20px, 3vw, 28px)',
           } as React.CSSProperties}>
-            page not found
+            Page Not Found
           </h1>
 
           {/* Hairline */}
