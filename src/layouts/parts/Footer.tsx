@@ -13,7 +13,7 @@ export default function Footer() {
   const navItems = [
     { href: '/about',           label: 'About' },
     { href: '/coaches-preview', label: 'Coaches' },
-    { href: '/inquiry',         label: 'Book a Session' },
+    { href: '/inquiry',         label: 'Inquiry' },
   ];
 
   return (

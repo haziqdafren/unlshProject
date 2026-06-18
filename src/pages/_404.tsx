@@ -144,7 +144,7 @@ export default function NotFoundPage() {
               {[
                 { to: '/about',           label: 'About' },
                 { to: '/coaches-preview', label: 'Coaches' },
-                { to: '/inquiry',         label: 'Book a Session' },
+                { to: '/inquiry',         label: 'Inquiry' },
                 { to: '/login',           label: 'Login' },
               ].map(({ to, label }) => (
                 <Link key={to} to={to} className="nf-quick-link">{label}</Link>
