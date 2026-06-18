@@ -187,7 +187,7 @@ function AboutHero() {
             lineHeight: 1.75,
             color: C.textOnDarkMuted,
             letterSpacing: '0.01em'
-          }}>Unlsh is a hybrid executive coaching and mentoring community for those who have achieved success, yet know they are meant for more. Through a holistic approach grounded in exceptional coaching blend in with <br />mentorship, conscious leadership, and real-world wisdom, we help leaders expand beyond conventional success and unlock new levels of clarity, growth, and potential.
+          }}>Unlsh is a hybrid executive coaching and mentoring community for those who have achieved success, yet know they are meant for more. Through a holistic approach grounded in exceptional coaching blended with mentorship, conscious leadership, and real-world wisdom, we help leaders expand beyond conventional success and unlock new levels of clarity, growth, and potential.
 
 
         </p>
