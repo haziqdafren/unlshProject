@@ -443,7 +443,7 @@ function CoachesList() {
           gap: 'clamp(24px, 4vw, 48px)', flexWrap: 'wrap' as const,
         }}>
         <Link to="/register" className="btn-primary-green">
-          Sign Up — Unlock All Coaches
+          Sign Up — Unlock The Full List
         </Link>
         <Link to="/login" className="cp-ghost-link">
           Already a member? Sign in
