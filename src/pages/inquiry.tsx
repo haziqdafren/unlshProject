@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Helmet } from '@dr.pogodin/react-helmet';
 
 // ─── Tokens (matches about.tsx exactly) ───────────────────────────────────────
@@ -48,29 +48,201 @@ const INQUIRER_TYPES = [
 ];
 
 const COUNTRY_CODES = [
-  { code: '+1',   label: '🇺🇸 +1' },
-  { code: '+44',  label: '🇬🇧 +44' },
-  { code: '+60',  label: '🇲🇾 +60' },
-  { code: '+61',  label: '🇦🇺 +61' },
-  { code: '+62',  label: '🇮🇩 +62' },
-  { code: '+63',  label: '🇵🇭 +63' },
-  { code: '+65',  label: '🇸🇬 +65' },
-  { code: '+66',  label: '🇹🇭 +66' },
-  { code: '+81',  label: '🇯🇵 +81' },
-  { code: '+82',  label: '🇰🇷 +82' },
-  { code: '+86',  label: '🇨🇳 +86' },
-  { code: '+91',  label: '🇮🇳 +91' },
-  { code: '+92',  label: '🇵🇰 +92' },
-  { code: '+971', label: '🇦🇪 +971' },
-  { code: '+972', label: '🇮🇱 +972' },
-  { code: '+33',  label: '🇫🇷 +33' },
-  { code: '+49',  label: '🇩🇪 +49' },
-  { code: '+31',  label: '🇳🇱 +31' },
-  { code: '+34',  label: '🇪🇸 +34' },
-  { code: '+39',  label: '🇮🇹 +39' },
-  { code: '+27',  label: '🇿🇦 +27' },
-  { code: '+55',  label: '🇧🇷 +55' },
-  { code: '+52',  label: '🇲🇽 +52' },
+  { code: '+93',  name: 'Afghanistan',                  flag: '🇦🇫' },
+  { code: '+355', name: 'Albania',                       flag: '🇦🇱' },
+  { code: '+213', name: 'Algeria',                       flag: '🇩🇿' },
+  { code: '+376', name: 'Andorra',                       flag: '🇦🇩' },
+  { code: '+244', name: 'Angola',                        flag: '🇦🇴' },
+  { code: '+1',   name: 'Antigua and Barbuda',           flag: '🇦🇬' },
+  { code: '+54',  name: 'Argentina',                     flag: '🇦🇷' },
+  { code: '+374', name: 'Armenia',                       flag: '🇦🇲' },
+  { code: '+61',  name: 'Australia',                     flag: '🇦🇺' },
+  { code: '+43',  name: 'Austria',                       flag: '🇦🇹' },
+  { code: '+994', name: 'Azerbaijan',                    flag: '🇦🇿' },
+  { code: '+1',   name: 'Bahamas',                       flag: '🇧🇸' },
+  { code: '+973', name: 'Bahrain',                       flag: '🇧🇭' },
+  { code: '+880', name: 'Bangladesh',                    flag: '🇧🇩' },
+  { code: '+1',   name: 'Barbados',                      flag: '🇧🇧' },
+  { code: '+375', name: 'Belarus',                       flag: '🇧🇾' },
+  { code: '+32',  name: 'Belgium',                       flag: '🇧🇪' },
+  { code: '+501', name: 'Belize',                        flag: '🇧🇿' },
+  { code: '+229', name: 'Benin',                         flag: '🇧🇯' },
+  { code: '+975', name: 'Bhutan',                        flag: '🇧🇹' },
+  { code: '+591', name: 'Bolivia',                       flag: '🇧🇴' },
+  { code: '+387', name: 'Bosnia and Herzegovina',        flag: '🇧🇦' },
+  { code: '+267', name: 'Botswana',                      flag: '🇧🇼' },
+  { code: '+55',  name: 'Brazil',                        flag: '🇧🇷' },
+  { code: '+673', name: 'Brunei',                        flag: '🇧🇳' },
+  { code: '+359', name: 'Bulgaria',                      flag: '🇧🇬' },
+  { code: '+226', name: 'Burkina Faso',                  flag: '🇧🇫' },
+  { code: '+257', name: 'Burundi',                       flag: '🇧🇮' },
+  { code: '+238', name: 'Cape Verde',                    flag: '🇨🇻' },
+  { code: '+855', name: 'Cambodia',                      flag: '🇰🇭' },
+  { code: '+237', name: 'Cameroon',                      flag: '🇨🇲' },
+  { code: '+1',   name: 'Canada',                        flag: '🇨🇦' },
+  { code: '+236', name: 'Central African Republic',      flag: '🇨🇫' },
+  { code: '+235', name: 'Chad',                          flag: '🇹🇩' },
+  { code: '+56',  name: 'Chile',                         flag: '🇨🇱' },
+  { code: '+86',  name: 'China',                         flag: '🇨🇳' },
+  { code: '+57',  name: 'Colombia',                      flag: '🇨🇴' },
+  { code: '+269', name: 'Comoros',                       flag: '🇰🇲' },
+  { code: '+242', name: 'Congo',                         flag: '🇨🇬' },
+  { code: '+243', name: 'Congo (DRC)',                   flag: '🇨🇩' },
+  { code: '+506', name: 'Costa Rica',                    flag: '🇨🇷' },
+  { code: '+385', name: 'Croatia',                       flag: '🇭🇷' },
+  { code: '+53',  name: 'Cuba',                          flag: '🇨🇺' },
+  { code: '+357', name: 'Cyprus',                        flag: '🇨🇾' },
+  { code: '+420', name: 'Czech Republic',                flag: '🇨🇿' },
+  { code: '+45',  name: 'Denmark',                       flag: '🇩🇰' },
+  { code: '+253', name: 'Djibouti',                      flag: '🇩🇯' },
+  { code: '+1',   name: 'Dominica',                      flag: '🇩🇲' },
+  { code: '+1',   name: 'Dominican Republic',            flag: '🇩🇴' },
+  { code: '+670', name: 'East Timor',                    flag: '🇹🇱' },
+  { code: '+593', name: 'Ecuador',                       flag: '🇪🇨' },
+  { code: '+20',  name: 'Egypt',                         flag: '🇪🇬' },
+  { code: '+503', name: 'El Salvador',                   flag: '🇸🇻' },
+  { code: '+240', name: 'Equatorial Guinea',             flag: '🇬🇶' },
+  { code: '+291', name: 'Eritrea',                       flag: '🇪🇷' },
+  { code: '+372', name: 'Estonia',                       flag: '🇪🇪' },
+  { code: '+268', name: 'Eswatini',                      flag: '🇸🇿' },
+  { code: '+251', name: 'Ethiopia',                      flag: '🇪🇹' },
+  { code: '+679', name: 'Fiji',                          flag: '🇫🇯' },
+  { code: '+358', name: 'Finland',                       flag: '🇫🇮' },
+  { code: '+33',  name: 'France',                        flag: '🇫🇷' },
+  { code: '+241', name: 'Gabon',                         flag: '🇬🇦' },
+  { code: '+220', name: 'Gambia',                        flag: '🇬🇲' },
+  { code: '+995', name: 'Georgia',                       flag: '🇬🇪' },
+  { code: '+49',  name: 'Germany',                       flag: '🇩🇪' },
+  { code: '+233', name: 'Ghana',                         flag: '🇬🇭' },
+  { code: '+30',  name: 'Greece',                        flag: '🇬🇷' },
+  { code: '+1',   name: 'Grenada',                       flag: '🇬🇩' },
+  { code: '+502', name: 'Guatemala',                     flag: '🇬🇹' },
+  { code: '+224', name: 'Guinea',                        flag: '🇬🇳' },
+  { code: '+245', name: 'Guinea-Bissau',                 flag: '🇬🇼' },
+  { code: '+592', name: 'Guyana',                        flag: '🇬🇾' },
+  { code: '+509', name: 'Haiti',                         flag: '🇭🇹' },
+  { code: '+504', name: 'Honduras',                      flag: '🇭🇳' },
+  { code: '+36',  name: 'Hungary',                       flag: '🇭🇺' },
+  { code: '+354', name: 'Iceland',                       flag: '🇮🇸' },
+  { code: '+91',  name: 'India',                         flag: '🇮🇳' },
+  { code: '+62',  name: 'Indonesia',                     flag: '🇮🇩' },
+  { code: '+98',  name: 'Iran',                          flag: '🇮🇷' },
+  { code: '+964', name: 'Iraq',                          flag: '🇮🇶' },
+  { code: '+353', name: 'Ireland',                       flag: '🇮🇪' },
+  { code: '+972', name: 'Israel',                        flag: '🇮🇱' },
+  { code: '+39',  name: 'Italy',                         flag: '🇮🇹' },
+  { code: '+1',   name: 'Jamaica',                       flag: '🇯🇲' },
+  { code: '+81',  name: 'Japan',                         flag: '🇯🇵' },
+  { code: '+962', name: 'Jordan',                        flag: '🇯🇴' },
+  { code: '+7',   name: 'Kazakhstan',                    flag: '🇰🇿' },
+  { code: '+254', name: 'Kenya',                         flag: '🇰🇪' },
+  { code: '+686', name: 'Kiribati',                      flag: '🇰🇮' },
+  { code: '+850', name: 'North Korea',                   flag: '🇰🇵' },
+  { code: '+82',  name: 'South Korea',                   flag: '🇰🇷' },
+  { code: '+383', name: 'Kosovo',                        flag: '🇽🇰' },
+  { code: '+965', name: 'Kuwait',                        flag: '🇰🇼' },
+  { code: '+996', name: 'Kyrgyzstan',                    flag: '🇰🇬' },
+  { code: '+856', name: 'Laos',                          flag: '🇱🇦' },
+  { code: '+371', name: 'Latvia',                        flag: '🇱🇻' },
+  { code: '+961', name: 'Lebanon',                       flag: '🇱🇧' },
+  { code: '+266', name: 'Lesotho',                       flag: '🇱🇸' },
+  { code: '+231', name: 'Liberia',                       flag: '🇱🇷' },
+  { code: '+218', name: 'Libya',                         flag: '🇱🇾' },
+  { code: '+423', name: 'Liechtenstein',                 flag: '🇱🇮' },
+  { code: '+370', name: 'Lithuania',                     flag: '🇱🇹' },
+  { code: '+352', name: 'Luxembourg',                    flag: '🇱🇺' },
+  { code: '+261', name: 'Madagascar',                    flag: '🇲🇬' },
+  { code: '+265', name: 'Malawi',                        flag: '🇲🇼' },
+  { code: '+60',  name: 'Malaysia',                      flag: '🇲🇾' },
+  { code: '+960', name: 'Maldives',                      flag: '🇲🇻' },
+  { code: '+223', name: 'Mali',                          flag: '🇲🇱' },
+  { code: '+356', name: 'Malta',                         flag: '🇲🇹' },
+  { code: '+692', name: 'Marshall Islands',              flag: '🇲🇭' },
+  { code: '+222', name: 'Mauritania',                    flag: '🇲🇷' },
+  { code: '+230', name: 'Mauritius',                     flag: '🇲🇺' },
+  { code: '+52',  name: 'Mexico',                        flag: '🇲🇽' },
+  { code: '+691', name: 'Micronesia',                    flag: '🇫🇲' },
+  { code: '+373', name: 'Moldova',                       flag: '🇲🇩' },
+  { code: '+377', name: 'Monaco',                        flag: '🇲🇨' },
+  { code: '+976', name: 'Mongolia',                      flag: '🇲🇳' },
+  { code: '+382', name: 'Montenegro',                    flag: '🇲🇪' },
+  { code: '+212', name: 'Morocco',                       flag: '🇲🇦' },
+  { code: '+258', name: 'Mozambique',                    flag: '🇲🇿' },
+  { code: '+95',  name: 'Myanmar',                       flag: '🇲🇲' },
+  { code: '+264', name: 'Namibia',                       flag: '🇳🇦' },
+  { code: '+674', name: 'Nauru',                         flag: '🇳🇷' },
+  { code: '+977', name: 'Nepal',                         flag: '🇳🇵' },
+  { code: '+31',  name: 'Netherlands',                   flag: '🇳🇱' },
+  { code: '+64',  name: 'New Zealand',                   flag: '🇳🇿' },
+  { code: '+505', name: 'Nicaragua',                     flag: '🇳🇮' },
+  { code: '+227', name: 'Niger',                         flag: '🇳🇪' },
+  { code: '+234', name: 'Nigeria',                       flag: '🇳🇬' },
+  { code: '+389', name: 'North Macedonia',               flag: '🇲🇰' },
+  { code: '+47',  name: 'Norway',                        flag: '🇳🇴' },
+  { code: '+968', name: 'Oman',                          flag: '🇴🇲' },
+  { code: '+92',  name: 'Pakistan',                      flag: '🇵🇰' },
+  { code: '+680', name: 'Palau',                         flag: '🇵🇼' },
+  { code: '+970', name: 'Palestine',                     flag: '🇵🇸' },
+  { code: '+507', name: 'Panama',                        flag: '🇵🇦' },
+  { code: '+675', name: 'Papua New Guinea',              flag: '🇵🇬' },
+  { code: '+595', name: 'Paraguay',                      flag: '🇵🇾' },
+  { code: '+51',  name: 'Peru',                          flag: '🇵🇪' },
+  { code: '+63',  name: 'Philippines',                   flag: '🇵🇭' },
+  { code: '+48',  name: 'Poland',                        flag: '🇵🇱' },
+  { code: '+351', name: 'Portugal',                      flag: '🇵🇹' },
+  { code: '+974', name: 'Qatar',                         flag: '🇶🇦' },
+  { code: '+40',  name: 'Romania',                       flag: '🇷🇴' },
+  { code: '+7',   name: 'Russia',                        flag: '🇷🇺' },
+  { code: '+250', name: 'Rwanda',                        flag: '🇷🇼' },
+  { code: '+1',   name: 'Saint Kitts and Nevis',         flag: '🇰🇳' },
+  { code: '+1',   name: 'Saint Lucia',                   flag: '🇱🇨' },
+  { code: '+1',   name: 'Saint Vincent and the Grenadines', flag: '🇻🇨' },
+  { code: '+685', name: 'Samoa',                         flag: '🇼🇸' },
+  { code: '+378', name: 'San Marino',                    flag: '🇸🇲' },
+  { code: '+239', name: 'São Tomé and Príncipe',         flag: '🇸🇹' },
+  { code: '+966', name: 'Saudi Arabia',                  flag: '🇸🇦' },
+  { code: '+221', name: 'Senegal',                       flag: '🇸🇳' },
+  { code: '+381', name: 'Serbia',                        flag: '🇷🇸' },
+  { code: '+248', name: 'Seychelles',                    flag: '🇸🇨' },
+  { code: '+232', name: 'Sierra Leone',                  flag: '🇸🇱' },
+  { code: '+65',  name: 'Singapore',                     flag: '🇸🇬' },
+  { code: '+421', name: 'Slovakia',                      flag: '🇸🇰' },
+  { code: '+386', name: 'Slovenia',                      flag: '🇸🇮' },
+  { code: '+677', name: 'Solomon Islands',               flag: '🇸🇧' },
+  { code: '+252', name: 'Somalia',                       flag: '🇸🇴' },
+  { code: '+27',  name: 'South Africa',                  flag: '🇿🇦' },
+  { code: '+211', name: 'South Sudan',                   flag: '🇸🇸' },
+  { code: '+34',  name: 'Spain',                         flag: '🇪🇸' },
+  { code: '+94',  name: 'Sri Lanka',                     flag: '🇱🇰' },
+  { code: '+249', name: 'Sudan',                         flag: '🇸🇩' },
+  { code: '+597', name: 'Suriname',                      flag: '🇸🇷' },
+  { code: '+46',  name: 'Sweden',                        flag: '🇸🇪' },
+  { code: '+41',  name: 'Switzerland',                   flag: '🇨🇭' },
+  { code: '+963', name: 'Syria',                         flag: '🇸🇾' },
+  { code: '+886', name: 'Taiwan',                        flag: '🇹🇼' },
+  { code: '+992', name: 'Tajikistan',                    flag: '🇹🇯' },
+  { code: '+255', name: 'Tanzania',                      flag: '🇹🇿' },
+  { code: '+66',  name: 'Thailand',                      flag: '🇹🇭' },
+  { code: '+228', name: 'Togo',                          flag: '🇹🇬' },
+  { code: '+676', name: 'Tonga',                         flag: '🇹🇴' },
+  { code: '+1',   name: 'Trinidad and Tobago',           flag: '🇹🇹' },
+  { code: '+216', name: 'Tunisia',                       flag: '🇹🇳' },
+  { code: '+90',  name: 'Turkey',                        flag: '🇹🇷' },
+  { code: '+993', name: 'Turkmenistan',                  flag: '🇹🇲' },
+  { code: '+688', name: 'Tuvalu',                        flag: '🇹🇻' },
+  { code: '+256', name: 'Uganda',                        flag: '🇺🇬' },
+  { code: '+380', name: 'Ukraine',                       flag: '🇺🇦' },
+  { code: '+971', name: 'United Arab Emirates',          flag: '🇦🇪' },
+  { code: '+44',  name: 'United Kingdom',                flag: '🇬🇧' },
+  { code: '+1',   name: 'United States',                 flag: '🇺🇸' },
+  { code: '+598', name: 'Uruguay',                       flag: '🇺🇾' },
+  { code: '+998', name: 'Uzbekistan',                    flag: '🇺🇿' },
+  { code: '+678', name: 'Vanuatu',                       flag: '🇻🇺' },
+  { code: '+58',  name: 'Venezuela',                     flag: '🇻🇪' },
+  { code: '+84',  name: 'Vietnam',                       flag: '🇻🇳' },
+  { code: '+967', name: 'Yemen',                         flag: '🇾🇪' },
+  { code: '+260', name: 'Zambia',                        flag: '🇿🇲' },
+  { code: '+263', name: 'Zimbabwe',                      flag: '🇿🇼' },
 ];
 
 interface FormValues {
@@ -89,7 +261,7 @@ interface FormValues {
 
 const BLANK: FormValues = {
   firstName: '', lastName: '', email: '',
-  whatsappCode: '+60', whatsapp: '',
+  whatsappCode: '+60', whatsapp: '',  // default: Malaysia
   company: '', role: '', website: '',
   inquirerType: 'Individual',
   topic: 'Executive coaching', message: '',
@@ -246,6 +418,31 @@ function BookForm() {
   const [form, setForm]           = useState<FormValues>(BLANK);
   const [submitted, setSubmitted] = useState(false);
   const [submitMode, setSubmitMode] = useState<SubmitMode | null>(null);
+  const [ccOpen, setCcOpen]       = useState(false);
+  const [ccSearch, setCcSearch]   = useState('');
+  const ccRef                     = useRef<HTMLDivElement>(null);
+
+  const filteredCodes = useMemo(() => {
+    const q = ccSearch.toLowerCase();
+    return q
+      ? COUNTRY_CODES.filter(c => c.name.toLowerCase().includes(q) || c.code.includes(q))
+      : COUNTRY_CODES;
+  }, [ccSearch]);
+
+  const selectedCountry = COUNTRY_CODES.find(c => c.code === form.whatsappCode) ?? COUNTRY_CODES[0];
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    if (!ccOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (ccRef.current && !ccRef.current.contains(e.target as Node)) {
+        setCcOpen(false);
+        setCcSearch('');
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [ccOpen]);
 
   // formRef targets the div that carries .book-form-reveal so `is-visible`
   // lands on the element the CSS transition is attached to.
@@ -414,16 +611,45 @@ function BookForm() {
 
         .book-phone-row {
           display: grid;
-          grid-template-columns: 130px 1fr;
+          grid-template-columns: 150px 1fr;
           gap: 0;
-        }
-        .book-phone-row .book-select {
-          border-right: none;
-          border-radius: 0;
         }
         .book-phone-row .book-input {
           border-radius: 0;
         }
+        .cc-trigger {
+          width: 100%; box-sizing: border-box;
+          background: #fff; border: 1px solid ${C.borderLight}; border-right: none;
+          padding: 14px 12px; font-family: var(--font-sans); font-size: 15px;
+          color: ${C.textOnLight}; outline: none; cursor: pointer;
+          display: flex; align-items: center; justify-content: space-between; gap: 6px;
+          transition: border-color 250ms ${EASE_LUXE};
+          white-space: nowrap; overflow: hidden;
+        }
+        .cc-trigger:focus { border-color: ${C.dark900}; }
+        .cc-dropdown {
+          position: absolute; top: 100%; left: 0; z-index: 999;
+          width: 280px; background: #fff;
+          border: 1px solid ${C.borderLight};
+          box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+          max-height: 300px; display: flex; flex-direction: column;
+        }
+        .cc-search {
+          padding: 10px 12px; border: none; border-bottom: 1px solid ${C.borderLight};
+          font-family: var(--font-sans); font-size: 14px; color: ${C.textOnLight};
+          outline: none; width: 100%; box-sizing: border-box;
+        }
+        .cc-list {
+          overflow-y: auto; flex: 1;
+        }
+        .cc-option {
+          padding: 10px 14px; cursor: pointer; font-family: var(--font-sans);
+          font-size: 14px; color: ${C.textOnLight};
+          display: flex; align-items: center; gap: 8px;
+          transition: background 150ms;
+        }
+        .cc-option:hover { background: ${C.muted}; }
+        .cc-option.selected { background: ${C.green}; }
 
         /* CTA buttons — matches about.tsx btn styles */
         .book-btn-green {
@@ -529,15 +755,52 @@ function BookForm() {
           <div style={{ marginBottom: '16px' }}>
             <label htmlFor="book-whatsapp" className="book-label">WhatsApp</label>
             <div className="book-phone-row">
-              <select
-                className="book-select"
-                value={form.whatsappCode}
-                onChange={e => set('whatsappCode', e.target.value)}
-                aria-label="Country code">
-                {COUNTRY_CODES.map(c => (
-                  <option key={c.code} value={c.code}>{c.label}</option>
-                ))}
-              </select>
+              <div ref={ccRef} style={{ position: 'relative' }}>
+                <button
+                  type="button"
+                  className="cc-trigger"
+                  onClick={() => { setCcOpen(o => !o); setCcSearch(''); }}
+                  aria-haspopup="listbox"
+                  aria-expanded={ccOpen}>
+                  <span>{selectedCountry?.flag} {form.whatsappCode}</span>
+                  <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+                    <path d="M1 1l4 4 4-4" stroke="#4A4A42" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                </button>
+                {ccOpen && (
+                  <div className="cc-dropdown" role="listbox">
+                    <input
+                      className="cc-search"
+                      type="text"
+                      placeholder="Search country…"
+                      value={ccSearch}
+                      onChange={e => setCcSearch(e.target.value)}
+                      autoFocus
+                    />
+                    <ul className="cc-list" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                      {filteredCodes.map((c, i) => (
+                        <li
+                          key={`${c.code}-${c.name}-${i}`}
+                          className={`cc-option${form.whatsappCode === c.code && selectedCountry?.name === c.name ? ' selected' : ''}`}
+                          role="option"
+                          aria-selected={form.whatsappCode === c.code && selectedCountry?.name === c.name}
+                          onMouseDown={() => {
+                            set('whatsappCode', c.code);
+                            setCcOpen(false);
+                            setCcSearch('');
+                          }}>
+                          <span>{c.flag}</span>
+                          <span style={{ flex: 1 }}>{c.name}</span>
+                          <span style={{ color: 'rgba(26,26,26,0.45)', fontSize: '13px' }}>{c.code}</span>
+                        </li>
+                      ))}
+                      {filteredCodes.length === 0 && (
+                        <li style={{ padding: '12px 14px', color: 'rgba(26,26,26,0.45)', fontSize: '14px' }}>No results</li>
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </div>
               <input
                 id="book-whatsapp" type="tel" className="book-input"
                 placeholder="Phone number" value={form.whatsapp}
