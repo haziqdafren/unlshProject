@@ -751,13 +751,6 @@ function ReviewsSection() {
           }}>
             Featured reviews
           </span>
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
-            color: C.textOnDarkFaint
-          }}>
-            UNL-REV
-          </span>
         </div>
         <h2
           id="reviews-heading"
@@ -859,14 +852,6 @@ function ReviewsSection() {
                   marginBottom: '6px'
                 }}>
                   {review.role}
-                </span>
-                <span
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '11px',
-                  color: C.textOnDarkFaint
-                }}>
-                  {review.ref}
                 </span>
               </footer>
             </blockquote>

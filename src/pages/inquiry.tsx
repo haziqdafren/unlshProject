@@ -47,10 +47,38 @@ const INQUIRER_TYPES = [
   'Other',
 ];
 
+const COUNTRY_CODES = [
+  { code: '+1',   label: '🇺🇸 +1' },
+  { code: '+44',  label: '🇬🇧 +44' },
+  { code: '+60',  label: '🇲🇾 +60' },
+  { code: '+61',  label: '🇦🇺 +61' },
+  { code: '+62',  label: '🇮🇩 +62' },
+  { code: '+63',  label: '🇵🇭 +63' },
+  { code: '+65',  label: '🇸🇬 +65' },
+  { code: '+66',  label: '🇹🇭 +66' },
+  { code: '+81',  label: '🇯🇵 +81' },
+  { code: '+82',  label: '🇰🇷 +82' },
+  { code: '+86',  label: '🇨🇳 +86' },
+  { code: '+91',  label: '🇮🇳 +91' },
+  { code: '+92',  label: '🇵🇰 +92' },
+  { code: '+971', label: '🇦🇪 +971' },
+  { code: '+972', label: '🇮🇱 +972' },
+  { code: '+33',  label: '🇫🇷 +33' },
+  { code: '+49',  label: '🇩🇪 +49' },
+  { code: '+31',  label: '🇳🇱 +31' },
+  { code: '+34',  label: '🇪🇸 +34' },
+  { code: '+39',  label: '🇮🇹 +39' },
+  { code: '+27',  label: '🇿🇦 +27' },
+  { code: '+55',  label: '🇧🇷 +55' },
+  { code: '+52',  label: '🇲🇽 +52' },
+];
+
 interface FormValues {
   firstName:    string;
   lastName:     string;
   email:        string;
+  whatsappCode: string;
+  whatsapp:     string;
   company:      string;
   role:         string;
   website:      string;
@@ -61,6 +89,7 @@ interface FormValues {
 
 const BLANK: FormValues = {
   firstName: '', lastName: '', email: '',
+  whatsappCode: '+60', whatsapp: '',
   company: '', role: '', website: '',
   inquirerType: 'Individual',
   topic: 'Executive coaching', message: '',
@@ -173,7 +202,7 @@ function BookHero() {
             gap: '14px',
           }}>
           <span style={{ display: 'block', width: '28px', height: '1px', backgroundColor: C.borderDark, flexShrink: 0 }} />
-          Inquiry
+          Get in touch
         </p>
 
         <h1
@@ -241,7 +270,7 @@ function BookForm() {
     setSubmitted(true);
     const subject = encodeURIComponent(`Inquiry — ${form.topic}`);
     const body    = encodeURIComponent(
-      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.company ? `\nCompany: ${form.company}` : ''}${form.role ? `\nRole: ${form.role}` : ''}${form.website ? `\nWebsite/LinkedIn: ${form.website}` : ''}\nI am a: ${form.inquirerType}\nInquiry: ${form.topic}\n\n${form.message}`,
+      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.whatsapp ? `\nWhatsApp: ${form.whatsappCode} ${form.whatsapp}` : ''}${form.company ? `\nCompany: ${form.company}` : ''}${form.role ? `\nRole: ${form.role}` : ''}${form.website ? `\nWebsite/LinkedIn: ${form.website}` : ''}\nI want to inquire as: ${form.inquirerType}\nInquiry: ${form.topic}\n\n${form.message}`,
     );
     window.location.href = `mailto:${INQUIRY_EMAIL}?subject=${subject}&body=${body}`;
   }
@@ -383,6 +412,19 @@ function BookForm() {
         }
         .book-select:focus { border-color: ${C.dark900}; }
 
+        .book-phone-row {
+          display: grid;
+          grid-template-columns: 130px 1fr;
+          gap: 0;
+        }
+        .book-phone-row .book-select {
+          border-right: none;
+          border-radius: 0;
+        }
+        .book-phone-row .book-input {
+          border-radius: 0;
+        }
+
         /* CTA buttons — matches about.tsx btn styles */
         .book-btn-green {
           display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -483,6 +525,28 @@ function BookForm() {
             />
           </div>
 
+          {/* WhatsApp */}
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="book-whatsapp" className="book-label">WhatsApp</label>
+            <div className="book-phone-row">
+              <select
+                className="book-select"
+                value={form.whatsappCode}
+                onChange={e => set('whatsappCode', e.target.value)}
+                aria-label="Country code">
+                {COUNTRY_CODES.map(c => (
+                  <option key={c.code} value={c.code}>{c.label}</option>
+                ))}
+              </select>
+              <input
+                id="book-whatsapp" type="tel" className="book-input"
+                placeholder="Phone number" value={form.whatsapp}
+                onChange={e => set('whatsapp', e.target.value)}
+                autoComplete="tel"
+              />
+            </div>
+          </div>
+
           {/* Company */}
           <div style={{ marginBottom: '16px' }}>
             <label htmlFor="book-company" className="book-label">Company / Organisation</label>
@@ -518,7 +582,7 @@ function BookForm() {
 
           {/* I am a */}
           <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="book-inquirer-type" className="book-label">I Am A</label>
+            <label htmlFor="book-inquirer-type" className="book-label">I want to inquire as</label>
             <select
               id="book-inquirer-type" className="book-select"
               value={form.inquirerType} onChange={e => set('inquirerType', e.target.value)}>

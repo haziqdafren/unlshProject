@@ -599,7 +599,7 @@ function WhatWeOffer() {
           style={{
             display: 'inline-block',
             backgroundColor: C.green,
-            color: C.textOnDark,
+            color: C.dark900,
             fontFamily: 'var(--font-sans)',
             fontSize: '13px',
             fontWeight: 700,
@@ -612,7 +612,7 @@ function WhatWeOffer() {
             whiteSpace: 'nowrap' as const,
             flexShrink: 0
           }}>
-          
+
           Meet the coaches
         </Link>
       </div>
@@ -788,9 +788,6 @@ function AboutCta() {
           
           <Link to="/book" className="cta-primary-btn">
             Book a quick call
-          </Link>
-          <Link to="/book" className="cta-ghost-link">
-            Or book a full session
           </Link>
         </div>
       </div>
