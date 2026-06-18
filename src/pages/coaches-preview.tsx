@@ -359,7 +359,7 @@ function CoachesList() {
             color: C.textOnLight,
             marginBottom: 'clamp(28px, 4vw, 48px)',
           } as React.CSSProperties}>
-          Meet The People Behind The Work
+          Meet The Expert Behind The Work
         </h2>
         <span className="cp-list-header-rule" aria-hidden="true" />
       </div>
@@ -422,7 +422,7 @@ function CoachesList() {
                         Sign In
                       </Link>
                       <Link to="/register" className="cp-ghost-link">
-                        Create account
+                        Sign Up
                       </Link>
                     </div>
                   )}
@@ -443,7 +443,7 @@ function CoachesList() {
           gap: 'clamp(24px, 4vw, 48px)', flexWrap: 'wrap' as const,
         }}>
         <Link to="/register" className="btn-primary-green">
-          Create account — unlock all coaches
+          Sign Up — Unlock All Coaches
         </Link>
         <Link to="/login" className="cp-ghost-link">
           Already a member? Sign in
