@@ -295,6 +295,7 @@ interface FormValues {
   company:      string;
   role:         string;
   website:      string;
+  referral:     string;
   inquirerType: string;
   topic:        string;
   message:      string;
@@ -303,7 +304,7 @@ interface FormValues {
 const BLANK: FormValues = {
   firstName: '', lastName: '', email: '',
   whatsappCode: '+852', whatsapp: '',  // default: Hong Kong
-  company: '', role: '', website: '',
+  company: '', role: '', website: '', referral: '',
   inquirerType: 'Individual',
   topic: 'Executive coaching', message: '',
 };
@@ -508,7 +509,7 @@ function BookForm() {
     setSubmitted(true);
     const subject = encodeURIComponent(`Inquiry — ${form.topic}`);
     const body    = encodeURIComponent(
-      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.whatsapp ? `\nWhatsApp: ${form.whatsappCode} ${form.whatsapp}` : ''}${form.company ? `\nCompany: ${form.company}` : ''}${form.role ? `\nRole: ${form.role}` : ''}${form.website ? `\nWebsite/LinkedIn: ${form.website}` : ''}\nI want to inquire as: ${form.inquirerType}\nInquiry: ${form.topic}\n\n${form.message}`,
+      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.whatsapp ? `\nWhatsApp: ${form.whatsappCode} ${form.whatsapp}` : ''}${form.company ? `\nCompany: ${form.company}` : ''}${form.role ? `\nRole: ${form.role}` : ''}${form.website ? `\nWebsite/LinkedIn: ${form.website}` : ''}${form.referral ? `\nReferred by: ${form.referral}` : ''}\nI want to inquire as: ${form.inquirerType}\nInquiry: ${form.topic}\n\n${form.message}`,
     );
     window.location.href = `mailto:${INQUIRY_EMAIL}?subject=${subject}&body=${body}`;
   }
@@ -883,7 +884,17 @@ function BookForm() {
             />
           </div>
 
-          {/* I am a */}
+          {/* Referral */}
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="book-referral" className="book-label">Referral's Full Name</label>
+            <input
+              id="book-referral" type="text" className="book-input"
+              placeholder="Who referred you? (optional)" value={form.referral}
+              onChange={e => set('referral', e.target.value)}
+            />
+          </div>
+
+          {/* I want to inquire as */}
           <div style={{ marginBottom: '16px' }}>
             <label htmlFor="book-inquirer-type" className="book-label">I want to inquire as</label>
             <select
