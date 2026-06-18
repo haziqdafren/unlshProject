@@ -576,19 +576,6 @@ function WhatWeOffer() {
                 {p.detail}
               </span>
             </div>
-            {/* Kit: type.md — Space Mono for reference numbers */}
-            <span
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '12px',
-              color: C.textOnDarkFaint,
-              letterSpacing: '0.02em',
-              whiteSpace: 'nowrap' as const,
-              flexShrink: 0
-            }}>
-            
-              {p.ref}
-            </span>
           </li>
         )}
         {/* Closing hairline */}
