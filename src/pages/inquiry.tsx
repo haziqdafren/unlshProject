@@ -187,7 +187,7 @@ function BookHero() {
             letterSpacing: '0.01em',
             color: C.textOnDark,
           } as React.CSSProperties}>
-          Start The Conversation
+          A Place To Begin
         </h1>
       </div>
 
@@ -205,9 +205,7 @@ function BookHero() {
           color: C.textOnDarkMuted,
           letterSpacing: '0.01em',
         }}>
-          Whether you're exploring coaching, speaking engagements, or simply want to
-          connect — I'd love to hear from you. Every meaningful conversation starts
-          with a single message.
+          For founders and leaders seeking thoughtful, high-calibre support, this is the first step. Share a few details about your current priorities, challenges, or season of leadership, and I'll be in touch to explore whether there's a strong fit.
         </p>
       </div>
     </section>
@@ -445,7 +443,7 @@ function BookForm() {
           color: C.textOnLight,
           marginBottom: 'clamp(40px, 6vw, 64px)',
         } as React.CSSProperties}>
-          How Would You Like To Connect?
+          Get Connected
         </h2>
 
         <form noValidate>
@@ -570,7 +568,7 @@ function BookForm() {
                   <path d="M3 9h18M8 2v4M16 2v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
                 Schedule a call
-                <span style={{ fontWeight: 400, opacity: 0.65, fontSize: '11px' }}>15–30 min</span>
+                <span style={{ fontWeight: 400, opacity: 0.65, fontSize: '11px' }}>20 mins</span>
               </button>
               <button
                 type="submit" className="book-btn-dark"
