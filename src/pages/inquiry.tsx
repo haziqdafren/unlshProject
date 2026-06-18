@@ -23,7 +23,19 @@ const C = {
 
 const SAVVYCAL_URL  = 'https://savvycal.com/jessieli/chat-with-jessie';
 const INQUIRY_EMAIL = 'hello@jessieli.co';
-const TOPICS        = ['1:1 coaching', 'Speaking engagements', 'Other'];
+const TOPICS = [
+  'Executive coaching',
+  'Founder support',
+  'Leadership growth and transition',
+  'Strategic clarity and decision-making',
+  'Executive presence, communication, and influence',
+  'Team leadership and organisational complexity',
+  'Sustainable leadership and burnout prevention',
+  'Purpose, fulfilment, and next chapter',
+  'Joining Unlsh as a coach/mentor/therapist',
+  'Speaking opportunities with Unlsh',
+  'Other',
+];
 
 type SubmitMode = 'call' | 'email';
 
@@ -31,14 +43,17 @@ interface FormValues {
   firstName: string;
   lastName:  string;
   email:     string;
-  phone:     string;
+  company:   string;
+  role:      string;
+  website:   string;
   topic:     string;
   message:   string;
 }
 
 const BLANK: FormValues = {
   firstName: '', lastName: '', email: '',
-  phone: '', topic: '1:1 coaching', message: '',
+  company: '', role: '', website: '',
+  topic: 'Executive coaching', message: '',
 };
 
 // ─── Reveal hook (matches about.tsx) ──────────────────────────────────────────
@@ -148,7 +163,7 @@ function BookHero() {
             gap: '14px',
           }}>
           <span style={{ display: 'block', width: '28px', height: '1px', backgroundColor: C.borderDark, flexShrink: 0 }} />
-          Book a Session
+          Inquiry
         </p>
 
         <h1
@@ -161,9 +176,8 @@ function BookHero() {
             lineHeight: 1.06,
             letterSpacing: '0.01em',
             color: C.textOnDark,
-            textTransform: 'lowercase' as const,
           } as React.CSSProperties}>
-          start the conversation
+          Start The Conversation
         </h1>
       </div>
 
@@ -217,14 +231,14 @@ function BookForm() {
     e.preventDefault();
     setSubmitMode('email');
     setSubmitted(true);
-    const subject = encodeURIComponent(`Book a Session — ${form.topic}`);
+    const subject = encodeURIComponent(`Inquiry — ${form.topic}`);
     const body    = encodeURIComponent(
-      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.phone ? `\nPhone: ${form.phone}` : ''}\nTopic: ${form.topic}\n\n${form.message}`,
+      `Name: ${form.firstName} ${form.lastName}\nEmail: ${form.email}${form.company ? `\nCompany: ${form.company}` : ''}${form.role ? `\nRole: ${form.role}` : ''}${form.website ? `\nWebsite/LinkedIn: ${form.website}` : ''}\nInquiry: ${form.topic}\n\n${form.message}`,
     );
     window.location.href = `mailto:${INQUIRY_EMAIL}?subject=${subject}&body=${body}`;
   }
 
-  const canSubmit = !!(form.firstName.trim() && form.email.trim() && form.message.trim());
+  const canSubmit = !!(form.firstName.trim() && form.email.trim());
 
   if (submitted) {
     return (
@@ -279,11 +293,10 @@ function BookForm() {
             lineHeight: 1.06,
             letterSpacing: '0.01em',
             color: C.textOnLight,
-            textTransform: 'lowercase' as const,
             maxWidth: '16ch',
             marginBottom: 'clamp(32px, 5vw, 56px)',
           } as React.CSSProperties}>
-            {submitMode === 'call' ? "opening your calendar" : "we'll be in touch"}
+            {submitMode === 'call' ? "Opening Your Calendar" : "We'll Be In Touch"}
           </h2>
           <p style={{
             fontFamily: 'var(--font-sans)',
@@ -420,30 +433,19 @@ function BookForm() {
           lineHeight: 1.1,
           letterSpacing: '0.01em',
           color: C.textOnLight,
-          textTransform: 'lowercase' as const,
           marginBottom: 'clamp(40px, 6vw, 64px)',
         } as React.CSSProperties}>
-          how would you like to connect?
+          How Would You Like To Connect?
         </h2>
 
         <form noValidate>
-
-          {/* Topic */}
-          <div style={{ marginBottom: '24px' }}>
-            <label htmlFor="book-topic" className="book-label">Topic</label>
-            <select
-              id="book-topic" className="book-select"
-              value={form.topic} onChange={e => set('topic', e.target.value)}>
-              {TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
 
           {/* Name */}
           <div
             className="book-name-grid"
             style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
             <div>
-              <label htmlFor="book-first" className="book-label">First name</label>
+              <label htmlFor="book-first" className="book-label">First Name</label>
               <input
                 id="book-first" type="text" className="book-input"
                 placeholder="First" value={form.firstName}
@@ -452,7 +454,7 @@ function BookForm() {
               />
             </div>
             <div>
-              <label htmlFor="book-last" className="book-label">Last name</label>
+              <label htmlFor="book-last" className="book-label">Last Name</label>
               <input
                 id="book-last" type="text" className="book-input"
                 placeholder="Last" value={form.lastName}
@@ -473,20 +475,47 @@ function BookForm() {
             />
           </div>
 
-          {/* Phone */}
-          <div style={{ marginBottom: '28px' }}>
-            <label htmlFor="book-phone" className="book-label">
-              Phone{' '}
-              <span style={{ fontWeight: 400, textTransform: 'none' as const, letterSpacing: 0, color: C.textOnLightFaint }}>
-                (optional)
-              </span>
-            </label>
+          {/* Company */}
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="book-company" className="book-label">Company / Organisation</label>
             <input
-              id="book-phone" type="tel" className="book-input"
-              placeholder="+1 (555) 000-0000" value={form.phone}
-              onChange={e => set('phone', e.target.value)}
-              autoComplete="tel"
+              id="book-company" type="text" className="book-input"
+              placeholder="Your company or organisation" value={form.company}
+              onChange={e => set('company', e.target.value)}
+              autoComplete="organization"
             />
+          </div>
+
+          {/* Role */}
+          <div style={{ marginBottom: '16px' }}>
+            <label htmlFor="book-role" className="book-label">Role / Title</label>
+            <input
+              id="book-role" type="text" className="book-input"
+              placeholder="Your role or title" value={form.role}
+              onChange={e => set('role', e.target.value)}
+              autoComplete="organization-title"
+            />
+          </div>
+
+          {/* Website / LinkedIn */}
+          <div style={{ marginBottom: '24px' }}>
+            <label htmlFor="book-website" className="book-label">Website / LinkedIn</label>
+            <input
+              id="book-website" type="url" className="book-input"
+              placeholder="https://" value={form.website}
+              onChange={e => set('website', e.target.value)}
+              autoComplete="url"
+            />
+          </div>
+
+          {/* Inquiry type */}
+          <div style={{ marginBottom: '28px' }}>
+            <label htmlFor="book-topic" className="book-label">Inquiry</label>
+            <select
+              id="book-topic" className="book-select"
+              value={form.topic} onChange={e => set('topic', e.target.value)}>
+              {TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
           </div>
 
           {/* Message */}
@@ -494,7 +523,7 @@ function BookForm() {
             <label htmlFor="book-message" className="book-label">Message</label>
             <textarea
               id="book-message" className="book-input"
-              placeholder="Tell me a little about what you're looking for…"
+              placeholder="Tell us a little about what you're looking for…"
               value={form.message}
               onChange={e => set('message', e.target.value)}
               rows={5} required
@@ -539,7 +568,7 @@ function BookForm() {
                 marginTop: '12px', fontFamily: 'var(--font-sans)', fontSize: '13px',
                 color: C.textOnLightFaint, letterSpacing: '0.01em',
               }}>
-                Fill in your name, email, and message to continue.
+                Fill in your first name and email to continue.
               </p>
             )}
           </div>
