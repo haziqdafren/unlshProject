@@ -433,12 +433,9 @@ Because true success is not just achieved — it is embodied.</p>
           overflow: 'hidden'
         }}>
         
-        <video
-          src="/airo-assets/videos/pages/home/value-prop"
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="/assets/hero-philosophy.png"
+          alt="A senior leader looking toward the future with clarity and fulfilment"
           className="split-img"
           style={{
             display: 'block',
@@ -970,16 +967,6 @@ function PillarsSection() {
                 {p.detail}
               </span>
             </div>
-            <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '12px',
-            color: C.textOnDarkFaint,
-            letterSpacing: '0.02em',
-            whiteSpace: 'nowrap' as const,
-            flexShrink: 0
-          }}>
-              {p.ref}
-            </span>
           </li>
         )}
       </ol>
