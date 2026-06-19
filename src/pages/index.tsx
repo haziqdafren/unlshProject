@@ -445,7 +445,7 @@ Because true success is not just achieved — it is embodied.</p>
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: 'center 20%'
+            objectPosition: 'center 40%'
           }} />
         
       </div>
