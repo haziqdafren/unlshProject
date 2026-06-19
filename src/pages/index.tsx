@@ -318,8 +318,8 @@ function ValuePropSection() {
       className="split-section-grid"
       style={{
         backgroundColor: C.offWhite,
-        minHeight: '70vh',
-        maxHeight: '75vh',
+        minHeight: '85vh',
+        maxHeight: '90vh',
         overflow: 'hidden',
         display: 'grid',
         gridTemplateColumns: '5fr 7fr',
@@ -445,7 +445,7 @@ Because true success is not just achieved — it is embodied.</p>
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: 'center 40%'
+            objectPosition: 'center 55%'
           }} />
         
       </div>
