@@ -904,15 +904,6 @@ function BookForm() {
             </select>
           </div>
 
-          {/* Inquiry type */}
-          <div style={{ marginBottom: '28px' }}>
-            <label htmlFor="book-topic" className="book-label">Inquiry</label>
-            <select
-              id="book-topic" className="book-select"
-              value={form.topic} onChange={e => set('topic', e.target.value)}>
-              {TOPICS.map(t => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
 
           {/* Message */}
           <div style={{ marginBottom: 'clamp(40px, 6vw, 56px)' }}>
