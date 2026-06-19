@@ -318,7 +318,8 @@ function ValuePropSection() {
       className="split-section-grid"
       style={{
         backgroundColor: C.offWhite,
-        minHeight: '90vh',
+        minHeight: '72vh',
+        maxHeight: '82vh',
         display: 'grid',
         gridTemplateColumns: '5fr 7fr',
         alignItems: 'stretch',
@@ -409,7 +410,8 @@ function ValuePropSection() {
               lineHeight: 1.75,
               color: C.textOnLightMuted,
               maxWidth: '36ch',
-              letterSpacing: '0.01em'
+              letterSpacing: '0.01em',
+              marginTop: 'clamp(16px, 3vw, 40px)'
             }}>Do you feel successful on paper, but not fully aligned within?
 Unlsh is built on a simple belief: true success is not just what you achieve, but how deeply it reflects who you are.
 Through coaching, mentorship, and access to leading voices across 
@@ -442,7 +444,7 @@ Because true success is not just achieved — it is embodied.</p>
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: 'center center'
+            objectPosition: 'center top'
           }} />
         
       </div>
