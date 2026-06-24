@@ -125,10 +125,10 @@ function HeroSection() {
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingTop: 'clamp(140px, 18vw, 220px)',
-        paddingRight: 'clamp(24px, 6vw, 96px)',
-        paddingBottom: 'clamp(80px, 10vw, 140px)',
-        paddingLeft: 'clamp(24px, 5vw, 80px)'
+        paddingTop: 'clamp(100px, 18vw, 220px)',
+        paddingRight: 'clamp(20px, 6vw, 96px)',
+        paddingBottom: 'clamp(64px, 10vw, 140px)',
+        paddingLeft: 'clamp(20px, 5vw, 80px)'
       }}>
       
       <style>{`
@@ -318,9 +318,6 @@ function ValuePropSection() {
       className="split-section-grid"
       style={{
         backgroundColor: C.offWhite,
-        minHeight: '85vh',
-        maxHeight: '90vh',
-        overflow: 'hidden',
         display: 'grid',
         gridTemplateColumns: '5fr 7fr',
         alignItems: 'stretch',
@@ -329,14 +326,15 @@ function ValuePropSection() {
       
       <style>{`
         @media (max-width: 960px) {
-          .split-section-grid { grid-template-columns: 1fr !important; min-height: auto !important; }
-          .split-image-col { order: 1; padding: 0 !important; min-height: clamp(300px, 52vw, 520px); opacity: 1 !important; transition: none !important; }
-          .split-text-col { order: 2; justify-content: flex-start !important; gap: clamp(48px, 7vw, 72px); padding: clamp(48px, 8vw, 80px) clamp(24px, 5vw, 48px) clamp(56px, 8vw, 80px) !important; }
+          .split-section-grid { grid-template-columns: 1fr !important; }
+          .split-image-col { order: 1; padding: 0 !important; min-height: clamp(260px, 56vw, 480px) !important; opacity: 1 !important; transition: none !important; }
+          .split-text-col { order: 2; justify-content: flex-start !important; padding: clamp(40px, 8vw, 72px) clamp(20px, 5vw, 48px) clamp(48px, 8vw, 72px) !important; }
           .split-text-group { opacity: 1 !important; transform: none !important; transition: none !important; }
           .split-cta-group { opacity: 1 !important; transition: none !important; }
         }
-        @media (max-width: 580px) {
-          .split-image-col { min-height: clamp(240px, 60vw, 380px) !important; }
+        @media (max-width: 480px) {
+          .split-image-col { min-height: 56vw !important; }
+          .split-text-col { padding: 36px 20px 48px !important; }
         }
         .split-text-group {
           opacity: 0;
@@ -575,7 +573,10 @@ function SpecialtiesSection() {
           gap: clamp(16px, 2.5vw, 32px);
         }
         @media (max-width: 900px) {
-          .people-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+          .people-grid { grid-template-columns: 1fr; }
+        }
+        @media (min-width: 540px) and (max-width: 900px) {
+          .people-grid { grid-template-columns: repeat(2, 1fr); }
         }
       `}</style>
 
@@ -725,8 +726,10 @@ function ReviewsSection() {
         .review-slot.is-visible { opacity: 1; transform: translateY(0); }
         @media (max-width: 860px) {
           .reviews-grid { grid-template-columns: 1fr !important; }
-          .reviews-grid .review-slot { border-left: none !important; border-top: 1px solid ${C.borderDark} !important; padding-left: 0 !important; padding-top: clamp(36px, 5vw, 56px) !important; }
-          .reviews-grid .review-slot:first-child { border-top: 1px solid ${C.borderDark} !important; }
+          .reviews-grid .review-slot { border-left: none !important; border-top: 1px solid ${C.borderDark} !important; padding: clamp(32px, 5vw, 56px) 0 !important; }
+        }
+        @media (max-width: 480px) {
+          .reviews-grid .review-slot { padding: 28px 0 !important; }
         }
         @media (prefers-reduced-motion: reduce) {
           *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -901,11 +904,9 @@ function PillarsSection() {
           display: flex;
           align-items: baseline;
           justify-content: space-between;
-          gap: clamp(16px, 3vw, 40px);
+          gap: clamp(12px, 3vw, 40px);
           border-top: 1px solid ${C.borderDark};
-          padding: clamp(24px, 3.5vw, 40px) clamp(24px, 5vw, 80px);
-          margin-left: calc(-1 * clamp(24px, 5vw, 80px));
-          margin-right: calc(-1 * clamp(24px, 5vw, 80px));
+          padding: clamp(20px, 3.5vw, 40px) 0;
           background-color: transparent;
           transition: opacity 700ms ${EASE_LUXE}, transform 700ms ${EASE_LUXE}, background-color 500ms ${EASE_LUXE};
           opacity: 0;
@@ -915,7 +916,7 @@ function PillarsSection() {
         .pillar-row-home:hover { background-color: ${C.dark800}; }
         .pillar-row-home:last-of-type { border-bottom: 1px solid ${C.borderDark}; }
         @media (max-width: 560px) {
-          .pillar-row-home { flex-wrap: wrap; align-items: flex-start; }
+          .pillar-row-home { flex-wrap: wrap; align-items: flex-start; gap: 8px; }
         }
       `}</style>
 
