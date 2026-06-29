@@ -419,9 +419,15 @@ academia, research, and industry, we help you grow externally, transform
 Because true success is not just achieved — it is embodied.</p>
         </div>
 
-        {/* CTA group — removed "How it works" link per design direction */}
-        <div className="split-cta-group" style={{ display: 'flex', alignItems: 'baseline', gap: 'clamp(24px, 3vw, 40px)', flexWrap: 'wrap' }}>
-          
+        {/* CTA group */}
+        <div className="split-cta-group" style={{ display: 'flex', alignItems: 'baseline', gap: 'clamp(24px, 3vw, 40px)', flexWrap: 'wrap', marginTop: 'clamp(32px, 4vw, 48px)' }}>
+          <a
+            href="https://www.careeralignmentlab.com/unlsh"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary-green">
+            Take Your Career Path Assessment
+          </a>
         </div>
       </div>
 

@@ -737,8 +737,8 @@ function AboutCta() {
             color: C.green,
             marginBottom: 'clamp(24px, 3.5vw, 40px)'
           }}>
-          
-          Book a quick call
+
+          Take the Next Step
         </p>
 
         <h2
@@ -772,9 +772,45 @@ function AboutCta() {
             color: C.textOnLightMuted,
             letterSpacing: '0.01em',
             maxWidth: '48ch',
-            marginBottom: 'clamp(40px, 6vw, 64px)'
+            marginBottom: 'clamp(32px, 5vw, 48px)'
           }}>
-          
+          If you are in the space between awareness and action, here is one way to begin: take the free assessment to better understand where you are right now and what your next chapter may be asking of you.
+        </p>
+
+        <div style={{ marginBottom: 'clamp(24px, 4vw, 40px)' }}>
+          <a
+            href="https://www.careeralignmentlab.com/unlsh"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-primary-btn">
+            Take Your Career Path Assessment
+          </a>
+        </div>
+
+        <p
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '13px',
+            fontWeight: 500,
+            textTransform: 'uppercase' as const,
+            letterSpacing: '0.12em',
+            color: C.textOnLightMuted,
+            marginBottom: 'clamp(20px, 3vw, 32px)'
+          }}>
+          or
+        </p>
+
+        <p
+          style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: '18px',
+            fontWeight: 400,
+            lineHeight: 1.7,
+            color: C.textOnLightMuted,
+            letterSpacing: '0.01em',
+            maxWidth: '48ch',
+            marginBottom: 'clamp(32px, 5vw, 48px)'
+          }}>
           A 20-minute call. No pitch, no pressure — just an honest conversation about where you are and where you want to go.
         </p>
 
@@ -785,7 +821,7 @@ function AboutCta() {
             gap: 'clamp(24px, 4vw, 48px)',
             flexWrap: 'wrap' as const
           }}>
-          
+
           <Link to="/book" className="cta-primary-btn">
             Book a quick call
           </Link>
